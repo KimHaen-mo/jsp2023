@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="./login.css">
     <title>로그인</title>
 </head>
+<%
+String id = (String)session.getAttribute("id");
+if(id == null) {
+	id ="";
+}
+%>
 <body>
 
 <div class="login-container">
-    <h2>로그인</h2>
+    <h2>로그인 <%= id %></h2>
     <form action="loginProcess.jsp" class="login-form" method="POST">
         <input type="text" name="username" placeholder="아이디" required>
         <input type="password" name="password" placeholder="비밀번호" required>
