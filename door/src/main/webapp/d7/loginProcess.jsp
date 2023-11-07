@@ -1,3 +1,4 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="door.JDBConnect"%>
@@ -19,10 +20,12 @@ String password = request.getParameter("password");
 	password : <%=password %>
 	
 	<%
-	String sql = "SELECT * FROM MEMBER WHERE id = 'musthave' AND pass='1234'";
+	String sql = "SELECT * FROM MEMBER WHERE id = ? AND pass= ?";
 	JDBConnect jdbc = new JDBConnect();
-	Statement stmt = jdbc.con.createStatement();
-	ResultSet rs = stmt.executeQuery(sql);
+	PreparedStatement pstmt = jdbc.con.prepareStatement(sql);
+	pstmt.setString(1, username);
+	pstmt.setString(2, password);
+	ResultSet rs = pstmt.executeQuery();
 	while(rs.next()){
 		String id = rs.getString(1);
 		String pass = rs.getString(2);
