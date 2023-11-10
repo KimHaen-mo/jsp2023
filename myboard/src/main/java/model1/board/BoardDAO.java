@@ -169,4 +169,42 @@ public class BoardDAO extends DBConnPool {
 			}
 	 		return result;
 	 	}
+	 	public List<BoardDTO> selectListPage(Map<String, Object> map) {
+			List<BoardDTO> bbs = new Vector<>();
+			
+			String query = "select * from (SELECT Tb.*, ROWNUM rNum FROM (select * from board";
+			if(map.get("searchWord") != null) {
+				query += "where" + map.get("searchField") +
+					  " like '%" + map.get("searchWord") + "%'";
+			
+		}
+		query += " order by num desc) Tb) where rNum between ? and ?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, map.get("start").toString());
+			psmt.setString(2, map.get("end").toString());
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				
+				dto.setNum(rs.getString("num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setPostdate(rs.getDate("postdate"));
+				dto.setId(rs.getString("id"));
+				dto.setVisitcount(rs.getString("visitcount"));
+				
+				bbs.add(dto);
+			}
+			
+			}catch (Exception e) {
+				System.out.println("게시물 조회 중 예외 발생");
+				e.printStackTrace();
+			}
+		return bbs;
+
+	 	}
 }
+
