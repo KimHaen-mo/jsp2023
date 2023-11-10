@@ -9,7 +9,7 @@ public class MemberDAO extends DBConnPool {
 	
 	public MemberDTO getMemberDTO(String uid, String upass) {
 		MemberDTO dto = new MemberDTO(); {
-			String query = "select * from member where id = ? and pwd = ?";
+			String query = "select * from member where id = ? and pass = ?";
 			
 			
 			try{
@@ -20,7 +20,7 @@ public class MemberDAO extends DBConnPool {
 				
 				if(rs.next()) {
 					dto.setId(rs.getString("id"));
-					dto.setPass(rs.getString("pwd"));
+					dto.setPass(rs.getString("pass"));
 					dto.setName(rs.getString("name"));
 					dto.setRegidate(rs.getString("regidate"));
 				}
