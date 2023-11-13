@@ -8,10 +8,10 @@
 <head><title>FileUpload</title></head>
 <body>
     <h2>DB에 등록된 파일 목록 보기</h2>
-    <a href="FileUploadMain.jsp">파일 등록하기</a>
+    <a href="index.jsp">파일 등록하기</a>
     <%
     MyfileDAO dao = new MyfileDAO();
-    List<MyfileDTO> fileLists = dao.myFileList();
+    List<MyfileDTO> fileLists = dao.myfileList();
     dao.close();
     %>
     <table border="1">
