@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.BoardPage;
+
 @WebServlet("/list.do")
 public class ListController extends HttpServlet {
         @Override
@@ -29,10 +31,14 @@ public class ListController extends HttpServlet {
                 int pageSize = 2;
 				int start = (pageNum - 1) * pageSize;
 				int end = pageSize;
+				int count = dao.selectCount(map);
 				map.put("start", start);
 				map.put("end", end);
-                int count = dao.selectCount(map);
+				String pagingImg = BoardPage.pagingStr(count, pageSize, 5, pageNum, "mvcboard/list.do");
+				map.put("pagingImg", pagingImg);
+				
                 List<MVCBoardDTO> board = dao.selectListPage(map);
+                req.setAttribute("map", map);
                 req.setAttribute("count", count);
                 req.setAttribute("board", board);
 				

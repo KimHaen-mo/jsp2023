@@ -29,6 +29,7 @@ if (board.size() == 0) {
 <%        
 }
 %>
+<h2>${ requestScope["map"]["pagingImg"] }</h2>
 </h2>
 </body>
 </html>
